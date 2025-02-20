@@ -1,24 +1,51 @@
+/*
+ * tsconfig.node.json
+ *
+ * This configuration is used for Node-specific TypeScript files (e.g. vite.config.ts).
+ * It provides settings for type-checking, module resolution, and compatibility with modern
+ * Node and bundler environments. It enforces strict type-checking and speeds up subsequent builds
+ * by caching incremental build information.
+ */
 {
   "compilerOptions": {
+    // Specifies the file where TypeScript stores incremental build information.
+    // This helps speed up subsequent compilations by caching previous build details.
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    // The target JavaScript version for the output (ES2022 is suitable for modern Node).
     "target": "ES2022",
-    "lib": ["ES2023"],
+    // Specify which libraries' type definitions to include. Here, we use the latest ECMAScript (ES2023) definitions.
+    "lib": [
+      "ES2023"
+    ],
+    // Use modern module syntax (ESNext); bundlers or Node's native ESM support will handle module resolution.
     "module": "ESNext",
+    // Skip type-checking of declaration (.d.ts) files to speed up compilation.
     "skipLibCheck": true,
-
     /* Bundler mode */
+    // Use a resolution strategy optimized for modern bundlers.
     "moduleResolution": "bundler",
+    // Allow importing of TypeScript files with their extensions (e.g. import x from "./file.ts").
     "allowImportingTsExtensions": true,
+    // Ensure each file is transpiled in isolation; necessary for some bundlers.
     "isolatedModules": true,
+    // Force module detection in files, even if they don't have explicit imports/exports.
     "moduleDetection": "force",
+    // Do not emit compiled JavaScript files; the bundler (like Vite) handles compilation.
     "noEmit": true,
-
-    /* Linting */
+    /* Linting and strict type-checking */
+    // Enable all strict type-checking options.
     "strict": true,
+    // Report an error if there are unused local variables.
     "noUnusedLocals": true,
+    // Report an error if there are unused function parameters.
     "noUnusedParameters": true,
+    // Prevent unintended fall-through between cases in switch statements.
     "noFallthroughCasesInSwitch": true,
+    // Ensure that imported modules with potential side effects are properly checked.
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.ts"]
+  // Only include Node-specific files, such as vite.config.ts.
+  "include": [
+    "vite.config.ts"
+  ]
 }

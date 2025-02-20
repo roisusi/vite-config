@@ -21,7 +21,6 @@ const App = () => {
 	const appf: CSSProperties = {
 		// eslint-disable-next-line no-restricted-syntax
 		margin: '10px',
-		color: '#ababab',
 	};
 	// bali TODO hello
 	return (

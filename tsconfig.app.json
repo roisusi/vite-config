@@ -5,27 +5,60 @@
  */
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo", // Path for incremental build info.
-    "target": "ES2020",   // The JavaScript language version for the output.
-    "useDefineForClassFields": true,  // Use the ECMAScript standard for class fields.
-    "lib": ["ES2020", "DOM", "DOM.Iterable"], // Include type definitions for ES2020 and browser APIs.
-    "module": "ESNext", // Use modern module syntax, letting your bundler handle module resolution.
-    "skipLibCheck": true,  // Skip type-checking of declaration files for faster builds.
+    // Path where incremental build information is stored (helps speed up subsequent builds)
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
+    // The target JavaScript version for the output code.
+    "target": "ES2020",
+
+    // Use the ECMAScript standard for class fields (aligns with modern behavior).
+    "useDefineForClassFields": true,
+
+    // List of libraries whose type definitions should be included.
+    // "DOM" and "DOM.Iterable" provide types for browser APIs.
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    // Specify the module system to use in the output; "ESNext" enables modern ES module syntax.
+    "module": "ESNext",
+
+    // Skip type-checking of declaration files (.d.ts) for faster builds.
+    "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler", // Use a resolution strategy that works well with bundlers.
-    "allowImportingTsExtensions": true, // Allow explicit TS file extensions when importing.
-    "isolatedModules": true, // Ensure each file can be safely transpiled independently.
-    "moduleDetection": "force", // Force module detection in files.
-    "noEmit": true,  // Do not emit output files (bundler handles compilation).
-    "jsx": "react-jsx", // Use the new React JSX transform.
+    // Use a module resolution strategy that works well with bundlers like Vite.
+    "moduleResolution": "bundler",
+
+    // Allow importing of TypeScript files with their extensions.
+    "allowImportingTsExtensions": true,
+
+    // Ensure each file is transpiled in isolation, which is required by some bundlers.
+    "isolatedModules": true,
+
+    // Force module detection in files (ensuring that even files without explicit imports/exports are treated as modules).
+    "moduleDetection": "force",
+
+    // Do not emit compiled output, as the bundler (e.g., Vite) handles compilation.
+    "noEmit": true,
+
+    // Configure JSX transform; "react-jsx" uses the new automatic runtime introduced in React 17+.
+    "jsx": "react-jsx",
 
     /* Linting and strict checks */
-    "strict": true,  // type-checking
-    "noUnusedLocals": true,  // Error if there are unused local variables.
-    "noUnusedParameters": true,  // Error if there are unused function parameters.
-    "noFallthroughCasesInSwitch": true,  // Prevent unintentional fall-through in switch cases.
-    "noUncheckedSideEffectImports": true  // Ensure imports don't have unchecked side effects.
+    // Enable all strict type-checking options.
+    "strict": true,
+
+    // Error if there are unused local variables.
+    "noUnusedLocals": true,
+
+    // Error if there are unused function parameters.
+    "noUnusedParameters": true,
+
+    // Prevent fall-through cases in switch statements (helps catch errors).
+    "noFallthroughCasesInSwitch": true,
+
+    // Ensure that imports that might have side effects are properly checked.
+    "noUncheckedSideEffectImports": true
   },
-  "include": ["src"] // Only include files in the "src" directory (where your app code lives).
+  // Only include files in the "src" directory – typically where your application code lives.
+  "include": ["src"]
 }
