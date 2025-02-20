@@ -10,11 +10,19 @@ import reactRefreshPlugin from "eslint-plugin-react-refresh";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 // Import the globals package to get pre-defined global variables for various environments.
 import globals from "globals";
-import { blankLineAfterClosing } from "./eslintCustom.mjs";
+import {
+  blankLineAfterClosing,
+  noHexColor,
+  requireTodoInComments,
+  requireUnionTypeInAlias,
+} from "./eslintCustom.mjs";
 
 const customRulesPlugin = {
   rules: {
     "blank-line-after-closing": blankLineAfterClosing,
+    "require-todo-in-comments": requireTodoInComments,
+    "require-union-type-in-alias": requireUnionTypeInAlias,
+    "no-hex-color": noHexColor,
   },
 };
 
@@ -86,8 +94,10 @@ export default [
           message: "Usage of margin (or its variants) is not allowed.",
         },
       ],
-      // error if a block’s closing curly brace
       "custom-rules/blank-line-after-closing": "error",
+      "custom-rules/require-todo-in-comments": "error",
+      "custom-rules/require-union-type-in-alias": "error",
+      "custom-rules/no-hex-color": "error",
     },
   },
 ];

@@ -1,19 +1,29 @@
 import './App.css';
+import { CSSProperties } from 'react';
 
 const App = () => {
 	let a;
+	type myType = number;
+
+	type roi = { x: number };
 
 	const ab = (hello: string): string => {
 		console.log(hello);
 		return 'Hello World';
 	};
-	const ahhh = 'd';
+
+	const ahhh: roi = 'd';
 
 	if (a === undefined) {
 		console.log('s');
 	}
-	const appf = {};
 
+	const appf: CSSProperties = {
+		// eslint-disable-next-line no-restricted-syntax
+		margin: '10px',
+		color: '#ababab',
+	};
+	// bali TODO hello
 	return (
 		<>
 			<p style={appf}></p>
