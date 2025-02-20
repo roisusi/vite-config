@@ -55,3 +55,27 @@ export default tseslint.config({
 for compiler
 "@types/react": "^19.0.8",
 "@types/react-dom": "^19.0.3"  
+
+
+
+
+## Compiler / TypeScript:
+
+- typescript: The core TypeScript compiler.
+- @types/react: TypeScript definitions for React.
+- @types/react-dom: TypeScript definitions for ReactDOM.
+
+## ESLint & Linting Tools:
+- eslint: The core linter.
+- @eslint/js: ESLint’s recommended configuration in flat config format.
+- @typescript-eslint/parser: Enables ESLint to parse TypeScript code.
+- @typescript-eslint/eslint-plugin: Provides TypeScript-specific linting rules.
+- eslint-plugin-react-hooks: Enforces rules for React Hooks usage.
+- eslint-plugin-react-refresh: Provides linting for React Refresh integration.
+
+## Build & Tooling:
+- vite: A fast development build tool.
+- @vitejs/plugin-react: Vite plugin for React, enabling JSX transformation and React Fast Refresh.
+
+## Code Formatting:
+- prettier: An opinionated code formatter.
