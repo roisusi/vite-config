@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
 	const [count, setCount] = useState(0);
-	useEfect(() => {
+	useEffect(() => {
 		setCount(count + 1);
 		console.log('App mounted');
 		return () => {
