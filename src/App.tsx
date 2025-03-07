@@ -1,10 +1,18 @@
 import './App.css';
-import { FullPageAnimatedSvg } from './FullPageAnimatedSvg.tsx';
+import { useEffect, useState } from 'react';
 
 const App = () => {
+	const [count, setCount] = useState(0);
+	useEfect(() => {
+		setCount(count + 1);
+		console.log('App mounted');
+		return () => {
+			console.log('App unmounted');
+		};
+	}, []);
 	return (
 		<>
-			<FullPageAnimatedSvg />
+			<h1>Hello</h1>
 		</>
 	);
 };

@@ -10,6 +10,10 @@ import reactRefreshPlugin from "eslint-plugin-react-refresh";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 // Import the globals package to get pre-defined global variables for various environments.
 import globals from "globals";
+// Import the React plugin for React-specific linting rules.
+import reactPlugin from "eslint-plugin-react";
+// Import the JSX Accessibility plugin for enforcing accessible JSX practices.
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import {
   blankLineAfterClosing,
   noHexColor,
@@ -27,6 +31,16 @@ const customRulesPlugin = {
 };
 
 export default [
+  {
+    ignores: [
+      "**/vite-env.d.ts",
+      "eslint.config.js",
+      "vite.config.ts",
+      "node_modules",
+      "build",
+      "dist",
+    ],
+  },
   {
     // 1. Files: Specifies which files to lint.
     //    Here we target JavaScript, JSX, TypeScript, and TSX files.
@@ -53,6 +67,8 @@ export default [
       "@typescript-eslint": tsPlugin,
       "react-refresh": reactRefreshPlugin,
       "react-hooks": reactHooksPlugin,
+      react: reactPlugin,
+      "jsx-a11y": jsxA11y,
       "custom-rules": customRulesPlugin,
     },
     // 4. Rules: Define which linting rules to enforce.
@@ -68,6 +84,9 @@ export default [
       ],
       "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks.
       "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies.
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "jsx-a11y/alt-text": "error",
       // ADD HERE ONLY - Custom rules can be added below.
 
       // Disallow explicit usage of the 'any' type to enforce strict type safety.

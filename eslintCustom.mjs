@@ -51,13 +51,19 @@ export const blankLineAfterClosing = {
 
         // Get the token immediately after the block.
         let tokenAfter = sourceCode.getTokenAfter(closingBrace, { includeComments: true });
+        if (tokenAfter && (tokenAfter.value === ';' || tokenAfter.value === ',' || tokenAfter.value === '}' || tokenAfter.value === 'else' || tokenAfter.value === 'catch')) {
+          return;
+        }
+
         let fixToken = closingBrace;
         // If the token after is a semicolon, treat that semicolon as part of the block.
         if (tokenAfter && tokenAfter.value === ';') {
           fixToken = tokenAfter;
           tokenAfter = sourceCode.getTokenAfter(tokenAfter, { includeComments: true });
         }
-        if (!tokenAfter) return;
+        if (!tokenAfter) {
+          return;
+        }
 
         const fixTokenEndLine = fixToken.loc.end.line;
         const nextTokenStartLine = tokenAfter.loc.start.line;
@@ -95,21 +101,15 @@ export const requireTodoInComments = {
     schema: [] // no options
   },
   create(context) {
-    // Only run this rule for .ts or .tsx files.
-    const filename = context.getFilename();
-    console.log(filename.includes('vite.config.ts'));
-    console.log(filename);
-    if (!filename.endsWith('.ts') && !filename.endsWith('.tsx') || filename.includes('vite.config.ts')) {
-      return {};
-    }
     return {
       Program() {
         const sourceCode = context.getSourceCode();
         // Retrieve all comments in the file
         const comments = sourceCode.getAllComments();
         comments.forEach(comment => {
+          const getBlocks = sourceCode.getText(comment);
           // Check if the comment text contains "todo" (case-insensitive)
-          if (!/todo/i.test(comment.value) && !/eslint/i.test(comment.value)) {
+          if (!/todo/i.test(comment.value) && !/eslint/i.test(comment.value) && !/^\/\*{1,2}/.test(getBlocks)) {
             context.report({
               loc: comment.loc,
               message: 'Comment must include "TODO" (case-insensitive) or "eslint".'
