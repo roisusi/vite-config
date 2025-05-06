@@ -1,5 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
+import { IconPlusCircle } from './POC/IconPlusCircle.tsx';
 
 const App = () => {
 	const [count, setCount] = useState(0);
@@ -13,6 +14,8 @@ const App = () => {
 	return (
 		<>
 			<h1>Hello</h1>
+			<IconPlusCircle variant={'small'} />
+			<IconPlusCircle variant={'large'} />
 		</>
 	);
 };
