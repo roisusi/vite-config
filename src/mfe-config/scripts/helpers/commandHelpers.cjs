@@ -1,6 +1,9 @@
 const { execSync } = require('child_process');
 const chalk = require('chalk');
+const path = require('path');
+const fs = require('fs');
 const { getErrorLine } = require('./fileHelpers.cjs');
+const { failedRerolling } = require('./uiHelpers.cjs');
 
 /**
  * Checks if a command is available globally

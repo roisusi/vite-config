@@ -41,29 +41,31 @@ const changeCurlyNamesInFiles = (
 };
 
 /**
- * Cleans the current directory except for .git
+ * Copies ErrorPage.tsx to utils folder
+ * @param {string} templatesDir - Templates directory path
  */
-const cleanDirectory = () => {
-	console.log(chalk.yellow('Cleaning the current directory...'));
-	const files = fs.readdirSync(process.cwd());
+const copyErrorPage = (templatesDir) => {
+	const targetPath = path.join(process.cwd(), 'src', 'utils', 'ErrorPage.tsx');
+	const templatePath = path.join(templatesDir, 'utils', 'ErrorPage.tsx');
 
-	files.forEach((file) => {
-		const filePath = path.join(process.cwd(), file);
-		if (file === '.git') {
-			return;
-		}
-		if (fs.lstatSync(filePath).isDirectory()) {
-			fs.rmSync(filePath, { recursive: true, force: true });
+	if (!fs.existsSync(targetPath)) {
+		if (fs.existsSync(templatePath)) {
+			fs.copyFileSync(templatePath, targetPath);
+			console.log(chalk.green(`Created ErrorPage component: ${targetPath}`));
 		} else {
-			fs.unlinkSync(filePath);
+			console.error(
+				chalk.red(`ErrorPage template not found at ${templatePath}`)
+			);
 		}
-	});
-
-	console.log(chalk.green('Directory cleaned.'));
+	} else {
+		console.log(
+			chalk.cyan(`ErrorPage component already exists: ${targetPath}`)
+		);
+	}
 };
 
 module.exports = {
 	getErrorLine,
 	changeCurlyNamesInFiles,
-	cleanDirectory,
+	copyErrorPage,
 };

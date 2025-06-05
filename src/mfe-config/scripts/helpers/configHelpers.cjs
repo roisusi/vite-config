@@ -1,8 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+const cheerio = require('cheerio');
 const { getErrorLine } = require('./fileHelpers.cjs');
 const { changeCurlyNamesInFiles } = require('./fileHelpers.cjs');
+const { failedRerolling } = require('./uiHelpers.cjs');
 
 /**
  * Merges dependencies from base package.json
@@ -279,6 +281,18 @@ const createInfrastructureFiles = (templatesDir, mfeName) => {
 	});
 };
 
+/**
+ * Changes Docker file configuration
+ * @param {string} filePath - Target file path
+ * @param {string} filePrefixPath - Template file path prefix
+ * @param {string} mfeName - MFE name
+ */
+const changeDockerFile = (filePath, filePrefixPath, mfeName) => {
+	console.log(chalk.magenta(`Setting Docker File Changes...`));
+	const searchMarker = ['{<MFE NAME>}'];
+	changeCurlyNamesInFiles(filePath, filePrefixPath, [mfeName], searchMarker);
+};
+
 module.exports = {
 	mergePackageJson,
 	addViteConfig,
@@ -286,4 +300,5 @@ module.exports = {
 	updateTitle,
 	addMfeNameToTsConfig,
 	createInfrastructureFiles,
+	changeDockerFile,
 };
