@@ -1,0 +1,57 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node.js and package managers
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build and distribution
+build
+dist
+*.swp  # Swap files
+.cache
+.parcel-cache
+
+# Testing
+coverage
+*.test.ts.snap
+*.test.tsx.snap
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.dump
+*.seed
+*.lock
+*.tsbuildinfo # TypeScript incremental compilation
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Editor and IDE files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.ipr
+*.iws
+
+# Logs
+npm-debug.log*
+npm-error.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
+logs
+.eslintcache

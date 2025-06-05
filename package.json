@@ -1,37 +1,20 @@
 {
-  "name": "my-react-app",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@emotion/styled": "^11.14.0",
-    "@mui/material": "5",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react": "^7.37.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.19.0",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.24.1",
-    "@typescript-eslint/parser": "^8.24.1",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.19.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.18",
-    "globals": "^15.15.0",
-    "prettier": "3.5.1",
-    "typescript": "~5.7.2",
-    "vite": "^6.1.0",
-    "vite-plugin-checker": "^0.9.0",
-    "vite-plugin-eslint": "^1.8.1"
-  }
+	"name": "@umtb/mfe-scripts",
+	"version": "1.0.30",
+	"author": "Roi Susi",
+	"description": "This is a script to build frontend applications with Mizrahi Structure",
+	"type": "module",
+	"scripts": {},
+	"bin": {
+		"setup-mfe": "./mfe-configs/scripts/menu.cjs",
+		"update-mfe": "./mfe-configs/scripts/update-configs.cjs"
+	},
+	"keywords": [],
+	"license": "ISC",
+	"dependencies": {
+		"chalk": "^4.1.2",
+		"cheerio": "^1.0.0",
+		"enquirer": "^2.4.1",
+		"husky": "^9.1.7"
+	}
 }

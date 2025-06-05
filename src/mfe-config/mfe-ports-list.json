@@ -1,0 +1,34 @@
+{
+    "host-shell": {
+        "port": 4000,
+        "previewPort": 5000
+    },
+    "header": {
+        "port": 4001,
+        "previewPort": 5001
+    },
+    "ishurim-ve-tfasim": {
+        "port": 4002,
+        "previewPort": 5002
+    },
+    "ezor-ishi": {
+        "port": 4003,
+        "previewPort": 5003
+    },
+    "osh": {
+        "port": 4004,
+        "previewPort": 5004
+    },
+    "open-banking": {
+        "port": 4005,
+        "previewPort": 5005
+    },
+    "transfers": {
+        "port": 4006,
+        "previewPort": 5006
+    },
+    "test": {
+        "port": 9998,
+        "previewPort": 9999
+    }
+}

@@ -1,0 +1,26 @@
+# To build this dockerfile, run:
+# docker build -t {<MFE NAME>} -f Dockerfile-local .
+
+FROM jfrog-artifactory.dev-tools.cloud.umtb.co.il/docker-remote/node:22-alpine
+
+# Set working directory
+WORKDIR /app/mfe-{<MFE NAME>}
+
+# Copy package.json for dependency installation
+COPY package.json .
+
+# Configure npm for local development
+RUN npm set strict-ssl false
+
+# Install dependencies
+RUN npm install --registry=https://jfrog-artifactory.dev-tools.cloud.umtb.co.il/artifactory/api/npm/npm-local-remote-virtual/ --verbose
+
+# Copy the rest of the files
+COPY . .
+
+# Build the microfrontend bundle
+RUN npm run build
+
+# Rename and archive the bundle
+RUN mv dist mfe-{<MFE NAME>}
+RUN tar -czvf mfe-{<MFE NAME>}.tar.gz mfe-{<MFE NAME>}

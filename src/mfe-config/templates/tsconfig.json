@@ -1,0 +1,8 @@
+{
+  // Root tsconfig: no files are compiled here directly.
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },  // For React app code.
+    { "path": "./tsconfig.node.json" }  // For Node-specific code (e.g. vite.config.ts).
+  ]
+}
