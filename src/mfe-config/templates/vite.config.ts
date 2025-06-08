@@ -1,9 +1,7 @@
 import path from 'path';
-import eslint from 'vite-plugin-eslint2';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
-import eslintPlugin from 'vite-plugin-eslint';
 import federation from '@originjs/vite-plugin-federation';
 //import { devProxy } from './vite.dev.config';
 
