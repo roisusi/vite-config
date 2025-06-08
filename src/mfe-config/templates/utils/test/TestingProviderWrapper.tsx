@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FC, ReactNode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { TestErrorBoundary } from './TestErrorBoundary';
 import { privateTheme, UmtbThemeProvider } from '@umtb/shared-ui-cmp';
 import { UmtbI18nProvider } from '@umtb/shared-i18n';
 interface TestingProviderWrapperProps {
@@ -23,20 +22,11 @@ export const TestingProviderWrapper: FC<TestingProviderWrapperProps> = ({
 				platform: 'business',
 			}}
 		>
-			{' '}
 			<UmtbThemeProvider baseTheme={privateTheme} direction="ltr">
-				{' '}
-				<TestErrorBoundary>
-					{' '}
-					<BrowserRouter>
-						{' '}
-						<QueryClientProvider client={client}>
-							{' '}
-							{children}{' '}
-						</QueryClientProvider>{' '}
-					</BrowserRouter>{' '}
-				</TestErrorBoundary>{' '}
-			</UmtbThemeProvider>{' '}
+				<BrowserRouter>
+					<QueryClientProvider client={client}>{children}</QueryClientProvider>
+				</BrowserRouter>
+			</UmtbThemeProvider>
 		</UmtbI18nProvider>
 	);
 };

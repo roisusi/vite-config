@@ -4,8 +4,6 @@ const chalk = require('chalk');
 const cheerio = require('cheerio');
 const { CONFIG_FILES, DIRECTORIES } = require('./constants.cjs');
 const { failedRerolling } = require('./uiHelpers.cjs');
-const { getErrorLine } = require('./fileHelpers.cjs');
-const { changeCurlyNamesInFiles } = require('./fileHelpers.cjs');
 
 /**
  * Gets the line number from an error stack trace
@@ -371,6 +369,26 @@ const copyTestingProviderWrapper = () => {
 	}
 };
 
+/**
+ * Copies test utils to the project
+ */
+const copyTestUtils = () => {
+	const templatesDir = path.join(__dirname, '../../templates');
+	const testDir = path.join(process.cwd(), 'src/utils/test');
+
+	// Ensure test directory exists
+	fs.mkdirSync(testDir, { recursive: true });
+
+	// Copy TestingProviderWrapper
+	const providerSource = path.join(
+		templatesDir,
+		'utils/test/TestingProviderWrapper.tsx'
+	);
+	const providerDest = path.join(testDir, 'TestingProviderWrapper.tsx');
+	fs.copyFileSync(providerSource, providerDest);
+	console.log(chalk.green('Created TestingProviderWrapper.tsx'));
+};
+
 module.exports = {
 	getErrorLine,
 	changeCurlyNamesInFiles,
@@ -382,4 +400,5 @@ module.exports = {
 	replaceAppTsx,
 	initializeReadme,
 	copyTestingProviderWrapper,
+	copyTestUtils,
 };

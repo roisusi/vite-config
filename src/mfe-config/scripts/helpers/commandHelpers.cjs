@@ -89,7 +89,7 @@ const invokePnpmInstall = async () => {
 		} catch (mizrahiError) {
 			console.warn(
 				chalk.yellow(
-					"Failed to install Mizrahi Libraries. This is expected if you don't have access to the private packages."
+					"Failed to install Mizrahi Libraries. This is expected if you don't have access to the Mizrahi packages."
 				)
 			);
 			console.warn(

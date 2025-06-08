@@ -5,6 +5,7 @@ const path = require('path');
 const chalk = require('chalk');
 const { execSync } = require('child_process');
 const crypto = require('crypto');
+const { copyTestingProviderWrapper } = require('./helpers/fileHelpers.cjs');
 
 // Ensure we're in a valid project directory
 try {
