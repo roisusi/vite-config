@@ -6,6 +6,22 @@ const chalk = require('chalk');
 const { execSync } = require('child_process');
 const crypto = require('crypto');
 
+// Ensure we're in a valid project directory
+try {
+	// Check if package.json exists in current directory
+	if (!fs.existsSync(path.join(process.cwd(), 'package.json'))) {
+		console.error(
+			chalk.red(
+				'Error: Not in a valid project directory (package.json not found)'
+			)
+		);
+		process.exit(1);
+	}
+} catch (error) {
+	console.error(chalk.red(`Error: ${error.message}`));
+	process.exit(1);
+}
+
 // Function to get error line
 function getErrorLine(error) {
 	const match = error.stack.match(/(\w+\.cjs:\d+:\d+)/);
@@ -506,6 +522,35 @@ const updateMockHostData = (projectPath, templatePath) => {
 const validateConfigs = async () => {
 	try {
 		console.log(chalk.blue('Starting configuration update...'));
+
+		// Validate project directory first
+		const validateProjectDirectory = () => {
+			try {
+				// Check if package.json exists
+				const packageJsonPath = path.join(process.cwd(), 'package.json');
+				if (!fs.existsSync(packageJsonPath)) {
+					throw new Error(
+						'Not in a valid project directory (package.json not found)'
+					);
+				}
+
+				// Check if src directory exists
+				const srcPath = path.join(process.cwd(), 'src');
+				if (!fs.existsSync(srcPath)) {
+					fs.mkdirSync(srcPath, { recursive: true });
+					console.log(chalk.yellow('Created src directory'));
+				}
+
+				return true;
+			} catch (error) {
+				console.error(
+					chalk.red(`Error validating project directory: ${error.message}`)
+				);
+				process.exit(1);
+			}
+		};
+
+		// Rest of your update logic
 		validateDirectoryStructure();
 		validateTemplateFiles();
 		validateTsConfig();
@@ -554,9 +599,7 @@ const updatePackageJson = () => {
 	}
 };
 
-// Execute if running directly
-if (require.main === module) {
-	validateConfigs();
-}
+// Execute update
+validateConfigs();
 
 module.exports = validateConfigs;

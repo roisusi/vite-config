@@ -159,6 +159,33 @@ const createDirectories = () => {
 		console.log(chalk.cyan(`Component already exists: ${mfeComponentPath}`));
 	}
 
+	// Create data directory and MockHostData.ts
+	const dataDir = path.join(process.cwd(), 'src', 'data');
+	fs.mkdirSync(dataDir, { recursive: true });
+
+	const mockDataPath = path.join(
+		process.cwd(),
+		'src',
+		'data',
+		'MockHostData.ts'
+	);
+	const mockDataTemplatePath = path.join(
+		templatesDir,
+		'data',
+		'MockHostData.ts'
+	);
+
+	if (!fs.existsSync(mockDataPath)) {
+		if (fs.existsSync(mockDataTemplatePath)) {
+			fs.copyFileSync(mockDataTemplatePath, mockDataPath);
+			console.log(chalk.green(`Created data file: ${mockDataPath}`));
+		} else {
+			console.error(chalk.red(`Template not found at ${mockDataTemplatePath}`));
+		}
+	} else {
+		console.log(chalk.cyan(`File already exists: ${mockDataPath}`));
+	}
+
 	// Create infrastructure files
 	const infrastructureDirs = {
 		axios: path.join(process.cwd(), 'src', 'infrastructure', 'axios'),

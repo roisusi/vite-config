@@ -6,13 +6,13 @@ const { getErrorLine } = require('./fileHelpers.cjs');
 const { failedRerolling } = require('./uiHelpers.cjs');
 
 /**
- * Checks if a command is available globally
+ * Checks if a command is available in the system
  * @param {string} command - Command to check
- * @returns {boolean} Whether the command exists
+ * @returns {boolean} - Whether the command is available
  */
 const isCommandAvailable = (command) => {
 	try {
-		execSync(`command -v ${command}`, { stdio: 'ignore' });
+		execSync(`which ${command}`, { stdio: 'ignore' });
 		return true;
 	} catch {
 		return false;
@@ -23,13 +23,15 @@ const isCommandAvailable = (command) => {
  * Creates a new Vite project
  */
 const createViteProject = () => {
-	console.log(chalk.yellow('Setting up a new Vite React-TS project...'));
+	console.log(chalk.yellow('Creating Vite project...'));
 	try {
-		execSync('pnpx create-vite . --template react-ts', { stdio: 'inherit' });
-		console.log(chalk.green('Vite React-TS project setup complete.'));
+		execSync('pnpm create vite@latest . --template react-ts', {
+			stdio: 'inherit',
+		});
+		console.log(chalk.green('Vite project created.'));
 	} catch (error) {
 		console.error(
-			chalk.red(`Failed to set up Vite project at ${getErrorLine(error)}`),
+			chalk.red(`Failed to create Vite project at ${getErrorLine(error)}`),
 			error.message
 		);
 		failedRerolling();
@@ -61,24 +63,89 @@ const initializeGit = () => {
 };
 
 /**
- * Sets up Husky with pre-commit and commit-msg hooks
+ * Installs pnpm dependencies
+ * @returns {Promise<void>}
  */
-const setupHusky = () => {
-	console.log(chalk.yellow('Setting up Husky...'));
+const invokePnpmInstall = async () => {
+	console.log(chalk.yellow('Installing dependencies...'));
 	try {
-		execSync('pnpm exec husky init', { stdio: 'inherit' });
-		execSync('rm .husky/pre-commit', { stdio: 'inherit' });
+		// First install base dependencies
+		execSync('pnpm install', { stdio: 'inherit' });
+		console.log(chalk.green('Base dependencies installed successfully.'));
+
+		// Install husky explicitly and set it up
+		console.log(chalk.yellow('Installing and setting up Husky...'));
+		execSync('pnpm install husky --save-dev', { stdio: 'inherit' });
+		execSync('pnpm exec husky install', { stdio: 'inherit' });
+		console.log(chalk.green('Husky installed and enabled successfully.'));
+
+		// Try to install Mizrahi Libraries
+		try {
+			console.log(chalk.yellow('Installing Mizrahi Libraries...'));
+			execSync('pnpm install @umtb/shared-ui-cmp @umtb/shared-ui-utils', {
+				stdio: 'inherit',
+			});
+			console.log(chalk.green('Mizrahi Libraries installed successfully.'));
+		} catch (mizrahiError) {
+			console.warn(
+				chalk.yellow(
+					"Failed to install Mizrahi Libraries. This is expected if you don't have access to the private packages."
+				)
+			);
+			console.warn(
+				chalk.yellow('You can install them later when you have proper access.')
+			);
+		}
+
+		const updatedDeps = [];
+		const updatedDevDeps = [];
+
+		if (updatedDeps.length > 0) {
+			console.log(chalk.blue('Dependencies updated:', updatedDeps.join(', ')));
+		}
+	} catch (error) {
+		console.error(
+			chalk.red(`Failed to install dependencies at ${getErrorLine(error)}`),
+			error.message
+		);
+		throw error;
+	}
+};
+
+/**
+ * Sets up Husky with pre-commit and commit-msg hooks
+ * @returns {Promise<void>}
+ */
+const setupHusky = async () => {
+	console.log(chalk.yellow('Setting up Husky hooks...'));
+	try {
+		// Remove default pre-commit hook if it exists
+		const preCommitPath = path.join(process.cwd(), '.husky', 'pre-commit');
+		if (fs.existsSync(preCommitPath)) {
+			fs.unlinkSync(preCommitPath);
+		}
 
 		const huskyDir = path.join(process.cwd(), '.husky');
+		if (!fs.existsSync(huskyDir)) {
+			fs.mkdirSync(huskyDir, { recursive: true });
+		}
+
 		const preCommitHook = path.join(huskyDir, 'pre-commit');
 		const preCommitContent = `#!/bin/sh
 echo "Running pre-commit hook..."
 echo "Checking Configuration Files..."
 echo "Updating Mizrahi Libraries..."
-pnpm update @umtb/shared-ui-cmp@latest
-pnpm update @umtb/shared-ui-utils@latest
+if pnpm update @umtb/shared-ui-cmp@latest @umtb/shared-ui-utils@latest  @umtb/shared-i18n@latest; then
+    echo "Mizrahi Libraries updated successfully"
+else
+    echo "Warning: Failed to update Mizrahi Libraries. This is expected if you don't have access."
+fi
 echo "Updating scripts checking files"
-npx --package @umtb/mfe-scripts update-mfe`;
+if npx --package @umtb/mfe-scripts update-mfe; then
+    echo "MFE scripts updated successfully"
+else
+    echo "Warning: Failed to update MFE scripts"
+fi`;
 
 		fs.writeFileSync(preCommitHook, preCommitContent.trim());
 		fs.chmodSync(preCommitHook, '755');
@@ -100,7 +167,7 @@ else
 
 		fs.writeFileSync(commitMsgHook, commitMsgContent.trim());
 		fs.chmodSync(commitMsgHook, '755');
-		console.log(chalk.green('Husky pre-commit and commit-msg hook installed.'));
+		console.log(chalk.green('Husky hooks created successfully.'));
 	} catch (error) {
 		console.error(
 			chalk.red(`Failed to set up Husky at ${getErrorLine(error)}`),
@@ -108,18 +175,6 @@ else
 		);
 		failedRerolling();
 	}
-};
-
-/**
- * Installs project dependencies using pnpm
- */
-const invokePnpmInstall = () => {
-	console.log(chalk.magenta(`Invoking pnpm install...`));
-	execSync('pnpm install', { stdio: 'inherit' });
-	console.log(chalk.magenta(`Invoking pnpm install for Mizrahi Libraries...`));
-	execSync('pnpm install @umtb/shared-ui-cmp @umtb/shared-ui-utils', {
-		stdio: 'inherit',
-	});
 };
 
 module.exports = {
