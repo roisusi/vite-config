@@ -37,7 +37,7 @@ const {
 } = require('./helpers/uiHelpers.cjs');
 
 // Main setup function
-const setupMfe = () => {
+const setupMfe = async () => {
 	try {
 		const version = require('../../../package.json').version || 'Error';
 		displayBanner(version);
@@ -49,7 +49,7 @@ const setupMfe = () => {
 
 		rl.question(
 			chalk.green('Do you want to proceed with the setup? (y/n): '),
-			(answer) => {
+			async (answer) => {
 				if (answer.toLowerCase() !== 'y') {
 					console.log(chalk.red('Setup aborted by the user.'));
 					rl.close();
@@ -147,7 +147,7 @@ const setupMfe = () => {
 
 					// Install pnpm dependencies
 					try {
-						invokePnpmInstall();
+						await invokePnpmInstall();
 					} catch (error) {
 						console.error(
 							chalk.red(`Failed to install dependencies: ${error.message}`)
@@ -156,7 +156,7 @@ const setupMfe = () => {
 					}
 
 					// Set up Husky
-					setupHusky();
+					await setupHusky();
 
 					console.log(chalk.bgBlue('MFE setup completed successfully!'));
 				} catch (setupError) {
