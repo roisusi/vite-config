@@ -556,6 +556,7 @@ const validateConfigs = async () => {
 		validateTsConfig();
 		await validatePackageJson();
 		updatePackageJson();
+		copyTestingProviderWrapper();
 		const templatesDir = path.join(__dirname, '../templates');
 		updateMockHostData(process.cwd(), templatesDir);
 		console.log(chalk.blue('Configuration update completed successfully!'));

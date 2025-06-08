@@ -14,6 +14,7 @@ const {
 	deleteViteAssets,
 	replaceAppTsx,
 	initializeReadme,
+	copyTestingProviderWrapper,
 } = require('./helpers/fileHelpers.cjs');
 const {
 	isCommandAvailable,
@@ -100,6 +101,9 @@ const setupMfe = async () => {
 
 					// Copy configuration files
 					copyConfigFiles();
+
+					// Copy test utils
+					copyTestingProviderWrapper();
 
 					// Copy ErrorPage component
 					const templatesDir = path.join(__dirname, '../templates');
