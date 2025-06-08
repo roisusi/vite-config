@@ -3,25 +3,14 @@ import { GlobalFonts } from '@umtb/shared-ui-cmp';
 import {
     ErrorDetailsType,
     extractErrorMessage,
-    HostShellData,
     isErrorDetailsType,
 } from '@umtb/shared-ui-utils';
 import { QueryClient } from '@tanstack/react-query';
 import packageJson from '../package.json';
 import Mfe{<MFE NAME>} from './components/Mfe{<MFE NAME>}';
+import { MockHostData } from './data/MockHostData';
 
 import './App.css';
-
-const MockHostData: HostShellData = {
-    _401Message: {
-        accountResourceId: '59755c14-d677-4288-9646-cf99e57e0506',
-        accountName: '',
-        accountId: '',
-    },
-    userId: '1234567890',
-    customerId: '123456789',
-    userIdNumber: '',
-};
 
 const queryClient = new QueryClient({
     defaultOptions: {
