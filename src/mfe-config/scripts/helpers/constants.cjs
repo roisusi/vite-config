@@ -13,6 +13,7 @@ const CONFIG_FILES = [
 	'tsconfig.node.json',
 	'eslintCustom.mjs',
 	'eslint.config.js',
+	'vite.config.ts',
 ];
 
 /**
@@ -35,7 +36,7 @@ const DIRECTORIES = [
 	'src/infrastructure/axios',
 	'src/infrastructure/routing',
 	'src/infrastructure/wrappers',
-	'src/interfaces/',
+	'src/interfaces',
 	'src/models',
 	'src/types',
 	'src/utils',
