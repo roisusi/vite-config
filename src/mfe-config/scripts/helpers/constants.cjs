@@ -14,6 +14,8 @@ const CONFIG_FILES = [
 	'eslintCustom.mjs',
 	'eslint.config.js',
 	'vite.config.ts',
+	'vite.tests.setup.ts',
+	'App.test.ts',
 ];
 
 /**
@@ -40,6 +42,7 @@ const DIRECTORIES = [
 	'src/models',
 	'src/types',
 	'src/utils',
+	'src/utils/test',
 ];
 
 module.exports = {

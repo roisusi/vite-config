@@ -1,13 +1,15 @@
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
 import federation from '@originjs/vite-plugin-federation';
+
 //import { devProxy } from './vite.dev.config';
 
 const baseUrl = 'https://mizrahi-web-route-devops-tools.apps.cluster01.dev-hdigital.cloud.umtb.co.il';
 
 export default defineConfig({
+    test: {  globals: true,  environment: 'jsdom',  setupFiles: ['./vitest.setup.ts'],},
     plugins: [
         react(),
         checker({
@@ -41,6 +43,7 @@ export default defineConfig({
         minify: false,
         cssCodeSplit: false,
         rollupOptions: {
+            external: ['**/*.test.tsx'],
             output: {
                 entryFileNames: '[name].js',
                 chunkFileNames: '[name].js',
